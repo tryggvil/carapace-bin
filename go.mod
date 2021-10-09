@@ -17,3 +17,4 @@ require (
 require github.com/inconshreveable/mousetrap v1.0.0 // indirect
 
 replace github.com/spf13/pflag => github.com/cornfeedhobo/pflag v1.1.0
+replace github.com/rsteube/carapace => ../carapace

@@ -24,6 +24,9 @@ var rootCmd = &cobra.Command{
 			} else if err := LintFlagActions(arg); err != nil {
 				println(err.Error())
 				exitCode = 1
+			} else if err := LintFilename(arg); err != nil {
+				println(err.Error())
+				exitCode = 1
 			}
 		}
 		os.Exit(exitCode)
