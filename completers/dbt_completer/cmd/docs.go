@@ -14,6 +14,5 @@ var docsCmd = &cobra.Command{
 func init() {
 	carapace.Gen(docsCmd).Standalone()
 
-
 	rootCmd.AddCommand(docsCmd)
 }
