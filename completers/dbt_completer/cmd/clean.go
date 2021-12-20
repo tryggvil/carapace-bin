@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"github.com/rsteube/carapace"
+	"github.com/rsteube/carapace-bin/completers/dbt_completer/cmd/action"
 	"github.com/spf13/cobra"
 )
 
@@ -20,4 +21,9 @@ func init() {
 	cleanCmd.Flags().StringP("target", "t", "", "Which target to load for the given profile")
 	cleanCmd.Flags().String("vars", "", "Supply variables to the project")
 	rootCmd.AddCommand(cleanCmd)
+
+    // TODO 
+	carapace.Gen(cleanCmd).FlagCompletion(carapace.ActionMap{
+		"profile": action.ActionProfiles(),
+	})
 }

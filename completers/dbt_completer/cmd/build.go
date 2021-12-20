@@ -33,4 +33,10 @@ func init() {
 	buildCmd.Flags().String("threads", "", "Specify number of threads to use while executing models.")
 	buildCmd.Flags().String("vars", "", "Supply variables to the project.")
 	rootCmd.AddCommand(buildCmd)
+
+	carapace.Gen(buildCmd).FlagCompletion(carapace.ActionMap{
+		"project-dir":   carapace.ActionDirectories(),
+		"resource-type": carapace.ActionValues("model", "seed", "snapshot", "test", "all"),
+		"state":         carapace.ActionDirectories(),
+	})
 }
