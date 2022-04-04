@@ -5,7 +5,6 @@ import (
 	"strings"
 
 	"github.com/rsteube/carapace"
-	"github.com/rsteube/carapace/pkg/style"
 )
 
 type LsRemoteRefOption struct {
@@ -24,9 +23,9 @@ func ActionLsRemoteRefs(url string, opts LsRemoteRefOption) carapace.Action {
 		for _, line := range lines[:len(lines)-1] {
 			fields := strings.Fields(line)
 			if opts.Branches && strings.HasPrefix(fields[1], "refs/heads/") {
-				vals = append(vals, strings.TrimPrefix(fields[1], "refs/heads/"), fields[0], style.Blue)
+				vals = append(vals, strings.TrimPrefix(fields[1], "refs/heads/"), fields[0], Style.Branch)
 			} else if opts.Tags && strings.HasPrefix(fields[1], "refs/tags/") {
-				vals = append(vals, strings.TrimPrefix(fields[1], "refs/tags/"), fields[0], style.Yellow)
+				vals = append(vals, strings.TrimPrefix(fields[1], "refs/tags/"), fields[0], Style.Tag)
 			}
 		}
 		return carapace.ActionStyledValuesDescribed(vals...)
