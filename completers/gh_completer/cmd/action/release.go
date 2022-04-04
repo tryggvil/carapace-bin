@@ -4,8 +4,8 @@ import (
 	"time"
 
 	"github.com/rsteube/carapace"
+	"github.com/rsteube/carapace-bin/pkg/styles"
 	"github.com/rsteube/carapace-bin/pkg/util"
-	"github.com/rsteube/carapace/pkg/style"
 	"github.com/spf13/cobra"
 )
 
@@ -47,7 +47,7 @@ func ActionReleases(cmd *cobra.Command) carapace.Action {
 					vals = append(vals, release.Node.Tag.Name, util.FuzzyAgo(time.Since(release.Node.CreatedAt)))
 				}
 			}
-			return carapace.ActionValuesDescribed(vals...).Style(style.Yellow)
+			return carapace.ActionValuesDescribed(vals...).Style(styles.Git.Commit)
 		})
 	})
 }
