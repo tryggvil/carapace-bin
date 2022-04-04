@@ -77,7 +77,7 @@ var rootCmd = &cobra.Command{
 		case "--list":
 			printCompleters()
 		case "--style":
-			if len(args) > 0 {
+			if len(args) > 1 {
 				setStyle(args[1]) // TODO handle error
 			}
 		case "_carapace":
