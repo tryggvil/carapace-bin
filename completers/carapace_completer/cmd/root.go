@@ -33,6 +33,7 @@ func flagCmd() *cobra.Command {
 	cmd.Flags().String("bridge", "", "generic completion bridge")
 	cmd.Flags().BoolP("help", "h", false, "help for carapace")
 	cmd.Flags().Bool("list", false, "list completers")
+	cmd.Flags().StringSlice("style", []string{}, "set style")
 	cmd.Flags().BoolP("version", "v", false, "version for carapace")
 
 	carapace.Gen(cmd).FlagCompletion(carapace.ActionMap{
@@ -51,6 +52,7 @@ func flagCmd() *cobra.Command {
 				return carapace.ActionValues()
 			}
 		}),
+        "style": carapace.ActionStyleConfig(),
 	})
 	return cmd
 }

@@ -12,6 +12,7 @@ import (
 	"strings"
 
 	"github.com/rsteube/carapace/pkg/ps"
+	"github.com/rsteube/carapace/pkg/style"
 	"github.com/spf13/cobra"
 )
 
@@ -75,6 +76,10 @@ var rootCmd = &cobra.Command{
 			println(cmd.Version)
 		case "--list":
 			printCompleters()
+		case "--style":
+			if len(args) > 0 {
+				setStyle(args[1]) // TODO handle error
+			}
 		case "_carapace":
 			shell := ps.DetermineShell()
 			if len(args) > 1 {
@@ -160,6 +165,14 @@ func invokeCompleter(completer string) {
 	patched = strings.Replace(patched, fmt.Sprintf("'%v', '_carapace'", executableName), fmt.Sprintf("'%v', '%v'", executableName, completer), -1) // xonsh callback
 	fmt.Print(patched)
 
+}
+
+func setStyle(s string) error {
+	if splitted := strings.Split(s, "="); len(splitted) == 2 {
+		return style.Set(splitted[0], strings.Replace(splitted[1], ",", " ", -1))
+	}
+    // TODO error msg
+    return nil
 }
 
 func Execute(version string) error {
