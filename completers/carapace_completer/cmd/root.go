@@ -52,7 +52,7 @@ func flagCmd() *cobra.Command {
 				return carapace.ActionValues()
 			}
 		}),
-        "style": carapace.ActionStyleConfig(),
+		"style": carapace.ActionStyleConfig(),
 	})
 	return cmd
 }
