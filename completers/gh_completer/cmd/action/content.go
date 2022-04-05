@@ -35,7 +35,7 @@ func ActionContents(cmd *cobra.Command, path string, branch string) carapace.Act
 				}
 				vals = append(vals, name, style.ForPathExt(name))
 			}
-			return carapace.ActionValues(vals...)
+			return carapace.ActionStyledValues(vals...)
 		})
 	})
 }
