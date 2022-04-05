@@ -113,7 +113,12 @@ func ActionContainerPath() carapace.Action {
 			return carapace.ActionMultiParts("/", func(c carapace.Context) carapace.Action {
 				return carapace.ActionExecCommand("docker", args...)(func(output []byte) carapace.Action {
 					lines := strings.Split(string(output), "\n")
-					return carapace.ActionValues(lines[:len(lines)-1]...)
+
+					vals := make([]string, 0)
+					for _, path := range lines[:len(lines)-1] {
+						vals = append(vals, path, style.ForPathExt(path))
+					}
+					return carapace.ActionStyledValues(vals...)
 				})
 			})
 		}
