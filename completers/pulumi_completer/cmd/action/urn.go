@@ -4,7 +4,6 @@ import (
 	"github.com/rsteube/carapace"
 	"github.com/rsteube/carapace/pkg/cache"
 	"github.com/spf13/cobra"
-	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -22,7 +21,7 @@ func ActionUrns(cmd *cobra.Command) carapace.Action {
 			cwd := cmd.Flag("cwd").Value.String()
 			stack := cmd.Flag("stack").Value.String()
 
-			os.Setenv("PULUMI_SKIP_UPDATE_CHECK", "1")
+			c.Setenv("PULUMI_SKIP_UPDATE_CHECK", "1")
 			return carapace.ActionExecCommand("pulumi", "--cwd", cwd, "stack", "--stack", stack, "--show-urns")(func(output []byte) carapace.Action {
 				reUrn := regexp.MustCompile(`URN: (?P<urn>urn:pulumi.*)`)
 				reId := regexp.MustCompile(`ID: (?P<id>.*)`)
@@ -42,13 +41,10 @@ func ActionUrns(cmd *cobra.Command) carapace.Action {
 					vals = append(vals, resource.Urn, resource.Id)
 				}
 				return carapace.ActionValuesDescribed(vals...)
-			})
+			}).Invoke(c).ToA()
 		}).Cache(5*time.Second, func() (string, error) {
-			workdir, err := os.Getwd()
-			if err != nil {
-				return "", err
-			}
-			if cmd.Flag("cwd").Changed {
+			workdir := c.Dir
+			if cmd.Flag("cwd").Changed { // TODO use preinvoke?
 				workdir = cmd.Flag("cwd").Value.String()
 			}
 			stack := cmd.Flag("stack").Value.String()
