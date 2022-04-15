@@ -86,6 +86,10 @@ func init() {
 
 func ActionManPages() carapace.Action {
 	return carapace.ActionCallback(func(c carapace.Context) carapace.Action {
+		if len(c.CallbackValue) < 1 {
+			return carapace.ActionMessage("enter at least 1 character for search") // limit results as full list is quite large
+		}
+
 		return carapace.ActionExecCommand("man", "-k", c.CallbackValue)(func(output []byte) carapace.Action {
 			r := regexp.MustCompile(`^(?P<name>.*) \(\d+\) +- (?P<description>.*)$`)
 
