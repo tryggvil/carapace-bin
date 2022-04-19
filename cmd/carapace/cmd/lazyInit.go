@@ -58,7 +58,11 @@ complete -c '%v' -f -a '(_carapace_lazy %v)'`, completer, completer, completer)
 func nushell_lazy(completers []string) string {
 	snippet := make([]string, len(completers))
 	for index, completer := range completers {
-		snippet[index] = fmt.Sprintf(`config set completion.%v [carapace %v nushell _]`, completer, completer)
+		//snippet[index] = fmt.Sprintf(`config set completion.%v [carapace %v nushell _]`, completer, completer)
+		snippet1 := fmt.Sprintf(`carapace %v nushell | save /tmp/%v.nu`, completer, completer)
+		snippet2 := fmt.Sprintf(`source /tmp/%v.nu`, completer)
+		snippets := []string{snippet1, snippet2}
+		snippet[index] = strings.Join(snippets, "\n")
 	}
 	return strings.Join(snippet, "\n")
 }
